@@ -22,23 +22,24 @@ const limiter = rateLimit({
   }
 });
 
-// Enhanced CORS configuration
+// Enhanced CORS configuration - FIXED ORIGINS
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps, curl, postman)
     if (!origin) return callback(null, true);
     
     const allowedOrigins = [
-      'https://fuelnow-api.onrender.com',
+      'https://fuelnow-backend.onrender.com', // ← YOUR ACTUAL SERVICE
       'http://localhost:3000',
       'http://localhost:3001',
-      'https://fuelnow-frontend.vercel.app', // Your future frontend
-      'https://fuelnow-admin.vercel.app'     // Your future admin panel
+      'https://swagger.io', // Allow Swagger UI
+      'https://petstore.swagger.io' // Allow Swagger UI
     ];
     
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
+      console.log('CORS blocked for origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },

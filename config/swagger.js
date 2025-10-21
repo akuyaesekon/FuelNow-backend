@@ -23,7 +23,7 @@ const options = {
         description: 'Development server'
       },
       {
-        url: 'https://fuelnow-api.onrender.com',
+        url: 'https://fuelnow-backend.onrender.com', // ← CHANGE THIS LINE
         description: 'Production server'
       }
     ],

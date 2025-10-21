@@ -1,5 +1,12 @@
 require('dotenv').config();
 
+console.log('Environment check:', {
+  DB_HOST: process.env.DB_HOST ? 'Set' : 'Missing',
+  DB_USER: process.env.DB_USER ? 'Set' : 'Missing',
+  DB_PASSWORD: process.env.DB_PASSWORD ? `Set (length: ${process.env.DB_PASSWORD.length})` : 'Missing',
+  DB_NAME: process.env.DB_NAME ? 'Set' : 'Missing'
+});
+
 module.exports = {
   port: process.env.PORT || 3000,
   database: {
@@ -7,8 +14,8 @@ module.exports = {
     port: process.env.DB_PORT || 5432,
     database: process.env.DB_NAME,
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    ssl: process.env.DB_SSL === 'true'
+    password: process.env.DB_PASSWORD || '', // Ensure it's always a string
+    ssl: process.env.DB_SSL === 'true' || true
   },
   jwt: {
     secret: process.env.JWT_SECRET || 'fuelnow-secret-key',

@@ -7,99 +7,73 @@ const {
 } = require('../controllers/reconciliationController');
 const { authenticateToken, requireRole } = require('../middleware/auth');
 
-/**
- * @swagger
- * tags:
- *   name: Admin
- *   description: Administrative endpoints for reports and reconciliation
- */
+// Public test endpoint (no auth required)
+router.get('/test', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Admin API is working!',
+    timestamp: new Date().toISOString()
+  });
+});
 
-/**
- * @swagger
- * /api/v1/admin/reports/daily:
- *   get:
- *     summary: Generate daily transaction report
- *     tags: [Admin]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: date
- *         schema:
- *           type: string
- *           format: date
- *         description: Date for report (YYYY-MM-DD), defaults to today
- *         example: "2024-01-15"
- *     responses:
- *       200:
- *         description: Daily report generated successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/SuccessResponse'
- *       401:
- *         description: Unauthorized - missing or invalid token
- *       403:
- *         description: Forbidden - insufficient permissions
- *       500:
- *         description: Internal server error
- */
+// Public health check for admin routes
+router.get('/health', (req, res) => {
+  res.json({
+    success: true,
+    service: 'FuelNow Admin API',
+    status: 'operational',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Demo data endpoint (no auth required for testing)
+router.get('/demo-report', async (req, res) => {
+  try {
+    const { date } = req.query;
+    
+    // Return sample data for demo
+    const sampleData = {
+      success: true,
+      message: 'Demo report data',
+      data: {
+        date: date || new Date().toISOString().split('T')[0],
+        report: {
+          total_transactions: 15,
+          total_amount: 7500,
+          total_interest: 750,
+          total_litres: 93.75,
+          stations: [
+            {
+              station_id: 'STN-001',
+              transaction_count: '8',
+              total_amount: '4000',
+              total_interest: '400',
+              total_litres: '50'
+            },
+            {
+              station_id: 'STN-002',
+              transaction_count: '7',
+              total_amount: '3500',
+              total_interest: '350',
+              total_litres: '43.75'
+            }
+          ]
+        }
+      }
+    };
+    
+    res.json(sampleData);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// Protected routes (require authentication)
 router.get('/reports/daily', authenticateToken, requireRole('admin'), generateDailyReport);
-
-/**
- * @swagger
- * /api/v1/admin/reports/settlement:
- *   get:
- *     summary: Generate settlement file for fuel stations
- *     tags: [Admin]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: date
- *         schema:
- *           type: string
- *           format: date
- *         description: Date for settlement (YYYY-MM-DD), defaults to today
- *         example: "2024-01-15"
- *     responses:
- *       200:
- *         description: Settlement file generated
- *         content:
- *           text/csv:
- *             schema:
- *               type: string
- *       401:
- *         description: Unauthorized - missing or invalid token
- *       403:
- *         description: Forbidden - insufficient permissions
- *       500:
- *         description: Internal server error
- */
 router.get('/reports/settlement', authenticateToken, requireRole('admin'), generateSettlementFile);
-
-/**
- * @swagger
- * /api/v1/admin/dashboard/stats:
- *   get:
- *     summary: Get dashboard statistics
- *     tags: [Admin]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Dashboard statistics retrieved
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/SuccessResponse'
- *       401:
- *         description: Unauthorized - missing or invalid token
- *       403:
- *         description: Forbidden - insufficient permissions
- *       500:
- *         description: Internal server error
- */
 router.get('/dashboard/stats', authenticateToken, requireRole('admin'), getDashboardStats);
 
 module.exports = router;
