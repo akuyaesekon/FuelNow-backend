@@ -29,7 +29,7 @@ const corsOptions = {
     if (!origin) return callback(null, true);
     
     const allowedOrigins = [
-      'https://fuelnow-backend.onrender.com',
+      'https://fuelnow-api.onrender.com',
       'http://localhost:3000',
       'http://localhost:3001',
       'https://fuelnow-frontend.vercel.app', // Your future frontend

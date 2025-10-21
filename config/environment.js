@@ -26,5 +26,5 @@ module.exports = {
   },
   interestRate: 0.10,
   activationFee: 500,
-  baseUrl: process.env.BASE_URL || 'https://fuelnow-backend.onrender.com'
+  baseUrl: process.env.BASE_URL || 'https://fuelnow-api.onrender.com'
 };
