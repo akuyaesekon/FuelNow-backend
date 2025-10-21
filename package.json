@@ -1,0 +1,43 @@
+{
+  "name": "fuelnow-backend",
+  "version": "1.0.0",
+  "description": "FuelNow Backend System with Swagger Documentation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "migrate": "node migrations/migrate.js",
+    "docs": "node -e \"console.log('API Documentation available at http://localhost:' + (process.env.PORT || 3000) + '/api-docs')\""
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.1",
+    "helmet": "^7.2.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "pg": "^8.16.3",
+    "swagger-jsdoc": "^3.7.0",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "keywords": [
+    "fuel",
+    "credit",
+    "mobile-money",
+    "api",
+    "documentation",
+    "swagger"
+  ],
+  "author": "FuelNow Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
