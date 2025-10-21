@@ -25,5 +25,6 @@ module.exports = {
     senderId: process.env.SMS_SENDER_ID || 'FuelNow'
   },
   interestRate: 0.10,
-  activationFee: 500
+  activationFee: 500,
+  baseUrl: process.env.BASE_URL || 'https://fuelnow-backend.onrender.com'
 };

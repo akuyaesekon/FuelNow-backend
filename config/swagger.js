@@ -23,7 +23,7 @@ const options = {
         description: 'Development server'
       },
       {
-        url: 'https://fuelnow-api.onrender.com',
+        url: 'https://fuelnow-backend.onrender.com',
         description: 'Production server'
       }
     ],
@@ -180,7 +180,7 @@ const options = {
       }
     ]
   },
-  apis: ['./routes/*.js', './controllers/*.js'], // Path to the API routes
+  apis: ['./routes/*.js', './controllers/*.js'],
 };
 
 const specs = swaggerJsdoc(options);
