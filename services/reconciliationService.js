@@ -14,9 +14,9 @@ class ReconciliationService {
         SELECT 
           station_id,
           COUNT(*) as transaction_count,
-          SUM(final_amount) as total_amount,
-          SUM(interest_amount) as total_interest,
-          SUM(litres) as total_litres
+          COALESCE(SUM(final_amount), 0) as total_amount,
+          COALESCE(SUM(interest_amount), 0) as total_interest,
+          COALESCE(SUM(litres), 0) as total_litres
         FROM transactions 
         WHERE status = 'completed' 
           AND completed_at BETWEEN $1 AND $2
